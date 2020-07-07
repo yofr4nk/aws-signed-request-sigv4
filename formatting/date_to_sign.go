@@ -14,10 +14,10 @@ type DatesFormatToSign struct {
 
 func BuildDatesToSign(dateToParse time.Time) DatesFormatToSign {
 	ymd := dateToParse.Format(YMDLayout)
-	nsd := dateToParse.Format(FullLayout)
+	fld := dateToParse.Format(FullLayout)
 
 	return DatesFormatToSign{
 		YMD: ymd,
-		UTC: nsd,
+		UTC: fld,
 	}
 }
