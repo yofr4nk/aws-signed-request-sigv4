@@ -5,7 +5,7 @@ type CHParams struct {
 	KeyPath     string
 	QueryString string
 	Host        string
-	FullDate    string
+	AMZDate    string
 	ContentMD5  string
 }
 
@@ -18,7 +18,7 @@ func BuildCanonicalHeader(chParams CHParams) string {
 	canonicalHeader += "content-md5:" + chParams.ContentMD5 + "\n"
 	canonicalHeader += "host:" + chParams.Host + "\n"
 	canonicalHeader += "x-amz-content-sha256:UNSIGNED-PAYLOAD\n"
-	canonicalHeader += "x-amz-date:" + chParams.FullDate + "\n\n"
+	canonicalHeader += "x-amz-date:" + chParams.AMZDate + "\n\n"
 	canonicalHeader += "content-md5;host;x-amz-content-sha256;x-amz-date\n"
 	canonicalHeader += "UNSIGNED-PAYLOAD"
 

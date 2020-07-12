@@ -12,7 +12,7 @@ func TestBuildCanonicalHeaderShouldReturnHeaderToSignInOnlyString(t *testing.T) 
 		KeyPath:     "fakePath/fake-image.png",
 		QueryString: "uploadID=FakeID&partNumber=1",
 		Host:        "myFakeBucket.s3.amazonaws.com",
-		FullDate:    "20200605T122800Z",
+		AMZDate:    "20200605T122800Z",
 		ContentMD5:  "144c9defac04969c7bfad8efaa8ea194",
 	}
 
@@ -34,8 +34,8 @@ func TestBuildCanonicalHeaderShouldReturnHeaderToSignInOnlyString(t *testing.T) 
 		t.Errorf("Expected %v header, but got %v", chParams.Host, canonicalHeader)
 	}
 
-	if strings.Contains(canonicalHeader, chParams.FullDate+"\n\n") == false {
-		t.Errorf("Expected %v header, but got %v", chParams.FullDate, canonicalHeader)
+	if strings.Contains(canonicalHeader, chParams.AMZDate+"\n\n") == false {
+		t.Errorf("Expected %v header, but got %v", chParams.AMZDate, canonicalHeader)
 	}
 
 	if strings.Contains(canonicalHeader, chParams.ContentMD5) == false {

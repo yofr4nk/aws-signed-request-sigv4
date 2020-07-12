@@ -3,21 +3,21 @@ package formatting
 import "time"
 
 const (
-	YMDLayout  string = "20060102"
-	FullLayout string = "20060102T150405Z0700"
+	StampLayout  string = "20060102"
+	AMZLayout string = "20060102T150405Z0700"
 )
 
 type DatesFormatToSign struct {
-	YMD string
-	UTC string
+	DateStamp string
+	AMZDate string
 }
 
 func BuildDatesToSign(dateToParse time.Time) DatesFormatToSign {
-	ymd := dateToParse.Format(YMDLayout)
-	fld := dateToParse.Format(FullLayout)
+	dateStamp := dateToParse.Format(StampLayout)
+	amzDate := dateToParse.Format(AMZLayout)
 
 	return DatesFormatToSign{
-		YMD: ymd,
-		UTC: fld,
+		DateStamp: dateStamp,
+		AMZDate: amzDate,
 	}
 }
