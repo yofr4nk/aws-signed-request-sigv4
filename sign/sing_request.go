@@ -10,12 +10,11 @@ import (
 const XAmzContentSha256 string = "UNSIGNED-PAYLOAD"
 
 type PayloadToSing struct {
-	Date       time.Time
-	KeyPath    string
-	UploadId   string
-	PartNumber string
-	ContentMD5 string
-	Method     string
+	Date        time.Time
+	KeyPath     string
+	QueryString string
+	ContentMD5  string
+	Method      string
 }
 
 type ConfigData struct {
@@ -40,14 +39,13 @@ type SignatureResponse struct {
 
 func CalculateSignature(p PayloadToSing, cd ConfigData) SignatureResponse {
 	dateFormats := formatting.BuildDatesToSign(p.Date)
-	qp, keysOrder := buildQueryParams(p)
 
-	paramsToSign := building.BuildPathToSign(qp, keysOrder, cd.Bucket)
+	hostToSign := building.BuildS3Host(cd.Bucket)
 	canonicalHeaders := building.BuildCanonicalHeader(building.CHParams{
 		Method:      p.Method,
 		KeyPath:     p.KeyPath,
-		QueryString: paramsToSign.QueryString,
-		Host:        paramsToSign.Host,
+		QueryString: p.QueryString,
+		Host:        hostToSign,
 		AMZDate:     dateFormats.AMZDate,
 		ContentMD5:  p.ContentMD5,
 	})
@@ -59,25 +57,13 @@ func CalculateSignature(p PayloadToSing, cd ConfigData) SignatureResponse {
 	authenticatedHeaders := building.BuildAuthenticatedHeaders(cd.AccessKeyId, dateFormats.DateStamp, cd.Region, signature)
 
 	return SignatureResponse{
-		Url: fmt.Sprintf("https://%s/%s?%s", paramsToSign.Host, p.KeyPath, paramsToSign.QueryString),
+		Url: fmt.Sprintf("https://%s/%s?%s", hostToSign, p.KeyPath, p.QueryString),
 		Header: HeaderData{
-			Host:              paramsToSign.Host,
+			Host:              hostToSign,
 			XAmzContentSha256: XAmzContentSha256,
 			XAmzDate:          dateFormats.AMZDate,
 			ContentMD5:        p.ContentMD5,
 			Authorization:     authenticatedHeaders,
 		},
 	}
-}
-
-func buildQueryParams(p PayloadToSing) (map[string]string, []string) {
-	qp := make(map[string]string)
-
-	qp["partNumber"] = p.PartNumber
-	qp["uploadId"] = p.UploadId
-
-	// It's needed to keep the order iterating QueryParams
-	keysOrder := []string{"partNumber", "uploadId"}
-
-	return qp, keysOrder
 }

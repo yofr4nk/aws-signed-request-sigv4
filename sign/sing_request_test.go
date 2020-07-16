@@ -14,12 +14,11 @@ func TestCalculateSignature(t *testing.T) {
 	d := time.Date(2020, 07, 16, 18, 04, 15, 00, l)
 
 	dataToSign := sign.PayloadToSing{
-		Date:       d,
-		KeyPath:    "fakePath/fakeFile.png",
-		UploadId:   "fakeUploadId",
-		PartNumber: "1",
-		ContentMD5: "144c9defac04969c7bfad8efaa8ea194",
-		Method:     "PUT",
+		Date:        d,
+		KeyPath:     "fakePath/fakeFile.png",
+		QueryString: "partNumber=1&uploadId=fakeUploadId",
+		ContentMD5:  "144c9defac04969c7bfad8efaa8ea194",
+		Method:      "PUT",
 	}
 
 	dataConfig := sign.ConfigData{
