@@ -1,6 +1,7 @@
 package hashing_test
 
 import (
+	"encoding/hex"
 	"github.com/yofr4nk/aws-signed-request-sigv4/hashing"
 	"testing"
 )
@@ -18,8 +19,8 @@ func TestCreateHmacShouldBuildHashBasedOnKeyedHashMessageAuthenticationCode(t *t
 	h := "cbc2f42e095370cf0e36a22fb38cc2da8cf4afcad8e697ef402e8da13b4ca811"
 	key := "MyTestKey"
 
-	textHashed := hashing.CreateHmac(key, "fake message to hash")
-	if textHashed != h {
+	textHashed := hashing.CreateHmac([]byte(key), "fake message to hash")
+	if hex.EncodeToString(textHashed) != h {
 		t.Errorf("Expected %v text hashed based on Hmac, but got %v", h, textHashed)
 	}
 }

@@ -1,7 +1,10 @@
 package building
 
-import "github.com/yofr4nk/aws-signed-request-sigv4/hashing"
+import (
+	"encoding/hex"
+	"github.com/yofr4nk/aws-signed-request-sigv4/hashing"
+)
 
-func BuildSignature(signingKey string, stringToSign string) string {
-	return hashing.CreateHmac(signingKey, stringToSign)
+func BuildSignature(signingKey []byte, stringToSign string) string {
+	return hex.EncodeToString(hashing.CreateHmac(signingKey, stringToSign))
 }

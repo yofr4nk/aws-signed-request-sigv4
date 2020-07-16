@@ -4,7 +4,7 @@ import "fmt"
 
 type paramsToSign struct {
 	QueryString string
-	Path        string
+	Host        string
 }
 
 type queryParams map[string]string
@@ -12,7 +12,7 @@ type queryParams map[string]string
 func BuildPathToSign(qp queryParams, keyParams []string, bucket string) paramsToSign {
 	return paramsToSign{
 		QueryString: buildQueryStringToSign(qp, keyParams),
-		Path:        fmt.Sprintf("%s.s3.amazonaws.com", bucket),
+		Host:        fmt.Sprintf("%s.s3.amazonaws.com", bucket),
 	}
 }
 

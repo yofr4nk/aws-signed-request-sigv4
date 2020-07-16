@@ -13,11 +13,9 @@ func CreateSha256(t string) string {
 	return hexData
 }
 
-func CreateHmac(key string, t string) string {
-	h := hmac.New(sha256.New, []byte(key))
+func CreateHmac(key []byte, t string) []byte {
+	h := hmac.New(sha256.New, key)
 	h.Write([]byte(t))
 
-	sha := hex.EncodeToString(h.Sum(nil))
-
-	return sha
+	return h.Sum(nil)
 }

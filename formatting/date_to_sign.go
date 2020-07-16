@@ -3,13 +3,13 @@ package formatting
 import "time"
 
 const (
-	StampLayout  string = "20060102"
-	AMZLayout string = "20060102T150405Z0700"
+	StampLayout string = "20060102"
+	AMZLayout   string = "20060102T150405Z"
 )
 
 type DatesFormatToSign struct {
 	DateStamp string
-	AMZDate string
+	AMZDate   string
 }
 
 func BuildDatesToSign(dateToParse time.Time) DatesFormatToSign {
@@ -18,6 +18,6 @@ func BuildDatesToSign(dateToParse time.Time) DatesFormatToSign {
 
 	return DatesFormatToSign{
 		DateStamp: dateStamp,
-		AMZDate: amzDate,
+		AMZDate:   amzDate,
 	}
 }

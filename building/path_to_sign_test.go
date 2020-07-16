@@ -12,8 +12,8 @@ func TestBuildPathToSign_ShouldBuildTheS3HostFromBucketPassed(t *testing.T) {
 	var keyParams []string
 
 	pathToSign := building.BuildPathToSign(queryParams, keyParams, bucket)
-	if pathToSign.Path != pathExpected {
-		t.Errorf("Expected %v bucket path, but got %v", pathExpected, pathToSign.Path)
+	if pathToSign.Host != pathExpected {
+		t.Errorf("Expected %v bucket path, but got %v", pathExpected, pathToSign.Host)
 	}
 
 	if pathToSign.QueryString != "" {
@@ -32,8 +32,8 @@ func TestBuildPathToSign_ShouldBuildTheQuery(t *testing.T) {
 	qsExpected := "uploadId=myTestID&partNumber=1"
 
 	pathToSign := building.BuildPathToSign(queryParams, keyParams, bucket)
-	if pathToSign.Path != pathExpected {
-		t.Errorf("Expected %v bucket path, but got %v", pathExpected, pathToSign.Path)
+	if pathToSign.Host != pathExpected {
+		t.Errorf("Expected %v bucket path, but got %v", pathExpected, pathToSign.Host)
 	}
 
 	if pathToSign.QueryString != qsExpected {

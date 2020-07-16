@@ -6,7 +6,7 @@ import (
 )
 
 func TestBuildSignatureShouldReturnAHashedSignature(t *testing.T) {
-	signingKey := "fakeSigningKey"
+	signingKey := []byte("fakeSigningKey")
 	stringToSign := "fakeStringToSign"
 	expectedSignature := "2995967988a0e18b6f77e5319f0e4869ef3d4d3bdc0ede53652abb46d1fbafad"
 
